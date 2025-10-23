@@ -1,0 +1,14 @@
+Model
+
+
+
+idLocal (Long, @Id)
+idPokeApi (int)
+name (String)
+height (int)
+weight (int)
+firstAbility (String)
+types (String) // CSV simples
+cachedAt (LocalDateTime)
+favorite (boolean)
+note (String)
