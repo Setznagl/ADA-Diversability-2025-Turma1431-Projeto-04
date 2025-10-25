@@ -17,7 +17,7 @@ public class PokemonController {
     
     @GetMapping("/type/{type}")
     public ResponseEntity<PokeApiTypeResponseDTO> getByTypeFromApi(@PathVariable String type) {
-        PokeApiTypeResponseDTO response = pokemonService.getApi(type);
+        PokeApiTypeResponseDTO response = pokemonService.getPokemonOfType(type);
         return ResponseEntity.ok(response);
     }
 }
