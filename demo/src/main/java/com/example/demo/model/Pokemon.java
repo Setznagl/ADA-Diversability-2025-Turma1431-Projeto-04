@@ -1,127 +1,63 @@
 package com.example.demo.model;
 
-import jakarta.persistence.*;
-import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
 
-@Entity
-@Table(name = "pokemons")
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Pokemon {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idLocal;
+  @JsonProperty("id")
+  private int idPokeApi;
 
-    private int idPokeApi;
+  private String name;
+  private int height;
+  private int weight;
 
+  private String firstAbility;
+  private List<String> types;
+
+  @JsonProperty("abilities")
+  private void unpackAbilities(List<AbilityWrapper> abilities) {
+    if (abilities != null && !abilities.isEmpty()) {
+      this.firstAbility = abilities.get(0).getAbility().getName();
+    }
+  }
+
+  @JsonProperty("types")
+  private void unpackTypes(List<TypeWrapper> types) {
+    if (types != null) {
+      this.types = types.stream()
+        .map(t -> t.getType().getName())
+        .collect(Collectors.toList());
+    }
+  }
+
+  @Data
+  @JsonIgnoreProperties(ignoreUnknown = true)
+  public static class AbilityWrapper {
+    private Ability ability;
+  }
+
+  @Data
+  @JsonIgnoreProperties(ignoreUnknown = true)
+  public static class Ability {
     private String name;
+  }
 
-    private int height;
+  @Data
+  @JsonIgnoreProperties(ignoreUnknown = true)
+  public static class TypeWrapper {
+    private Type type;
+  }
 
-    private int weight;
-
-    private String firstAbility;
-
-    private String types; // CSV simples
-
-    private LocalDateTime cachedAt;
-
-    private boolean favorite;
-
-    private String note;
-
-    // Construtores
-    public Pokemon() {}
-
-    public Pokemon(int idPokeApi, String name, int height, int weight,
-                   String firstAbility, String types) {
-        this.idPokeApi = idPokeApi;
-        this.name = name;
-        this.height = height;
-        this.weight = weight;
-        this.firstAbility = firstAbility;
-        this.types = types;
-        this.cachedAt = LocalDateTime.now();
-        this.favorite = false;
-    }
-
-    // Getters e Setters
-    public Long getIdLocal() {
-        return idLocal;
-    }
-
-    public void setIdLocal(Long idLocal) {
-        this.idLocal = idLocal;
-    }
-
-    public int getIdPokeApi() {
-        return idPokeApi;
-    }
-
-    public void setIdPokeApi(int idPokeApi) {
-        this.idPokeApi = idPokeApi;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    public int getWeight() {
-        return weight;
-    }
-
-    public void setWeight(int weight) {
-        this.weight = weight;
-    }
-
-    public String getFirstAbility() {
-        return firstAbility;
-    }
-
-    public void setFirstAbility(String firstAbility) {
-        this.firstAbility = firstAbility;
-    }
-
-    public String getTypes() {
-        return types;
-    }
-
-    public void setTypes(String types) {
-        this.types = types;
-    }
-
-    public LocalDateTime getCachedAt() {
-        return cachedAt;
-    }
-
-    public void setCachedAt(LocalDateTime cachedAt) {
-        this.cachedAt = cachedAt;
-    }
-
-    public boolean isFavorite() {
-        return favorite;
-    }
-
-    public void setFavorite(boolean favorite) {
-        this.favorite = favorite;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
-    }
+  @Data
+  @JsonIgnoreProperties(ignoreUnknown = true)
+  public static class Type {
+    private String name;
+  }
 }
