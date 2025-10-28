@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 
 import java.util.List;
@@ -18,8 +19,11 @@ public class Pokemon {
   @JsonProperty("id")
   private int idPokeApi;
 
+  @NotNull(message = "O nome não pode ser nulo")
   private String name;
+  @Positive(message = "A altura deve ser positiva")
   private int height;
+  @Positive(message = "O peso deve ser positivo")
   private int weight;
 
   private String firstAbility;

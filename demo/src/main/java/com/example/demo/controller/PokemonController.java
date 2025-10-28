@@ -17,7 +17,13 @@ public class PokemonController {
     
     @GetMapping("/type/{type}")
     public ResponseEntity<PokeApiTypeResponseDTO> getByTypeFromApi(@PathVariable String type) {
-        PokeApiTypeResponseDTO response = pokemonService.getPokemonOfType(type);
+        PokeApiTypeResponseDTO response = pokemonService.getPokemonsOfType(type);
         return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/type/cache")
+    public ResponseEntity<Void> cleanPokemonByTypeCache() {
+        pokemonService.cleanPokemonsByTypeCache();
+        return ResponseEntity.noContent().build();
     }
 }

@@ -1,17 +1,17 @@
 package com.example.demo.dto;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Component
 @Setter
 @Getter
-public class PokeApiTypeResponseDTO {
+public class PokeApiTypeResponseDTO implements Serializable {
 
     @JsonAlias("name")
     private String type;
