@@ -7,23 +7,11 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-@Service
-public class PokemonService {
-
-    @Autowired
-    private PokeApiGateway pokeApiGateway;
+public interface PokemonService {
 
     @Cacheable("pokeApiTypeResponseDTO")
-    public PokeApiTypeResponseDTO getPokemonsOfType(String type) {
-        try {
-            return pokeApiGateway.getPokemonOfType(type);
-        } catch (Exception e) {
-            throw new RuntimeException("Erro ao buscar dados da PokeAPI: " + e.getMessage(), e);
-        }
-    }
+    public PokeApiTypeResponseDTO getPokemonsOfType(String type);
 
     @CacheEvict(value = "pokeApiTypeResponseDTO", allEntries = true)
-    public void cleanPokemonsByTypeCache() {
-        System.out.println("Cache de pokemons por tipo foi limpo!");
-    }
+    public void cleanPokemonsByTypeCache();
 }

@@ -10,8 +10,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/pokemon")
 public class PokemonController {
 
+    private final PokemonService pokemonService;
+
     @Autowired
-    private PokemonService pokemonService;
+    public PokemonController(PokemonService pokemonService) {
+        this.pokemonService = pokemonService;
+    }
     
     @GetMapping("/type/{type}")
     public ResponseEntity<PokeApiTypeResponseDTO> getByTypeFromApi(@PathVariable String type) {
