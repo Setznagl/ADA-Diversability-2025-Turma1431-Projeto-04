@@ -2,18 +2,16 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.PokeApiTypeResponseDTO;
 import com.example.demo.service.PokemonService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/pokemon")
 public class PokemonController {
-    
-    private final PokemonService pokemonService;
-    
-    public PokemonController(PokemonService pokemonService) {
-        this.pokemonService = pokemonService;
-    }
+
+    @Autowired
+    private PokemonService pokemonService;
     
     @GetMapping("/type/{type}")
     public ResponseEntity<PokeApiTypeResponseDTO> getByTypeFromApi(@PathVariable String type) {
