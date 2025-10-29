@@ -1,5 +1,6 @@
 package com.example.demo.security;
 
+import com.example.demo.model.Usuario;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -24,9 +25,10 @@ public class JwtUtil {
         this.expiration = expiration;
     }
 
-    public String gerarToken(String username) {
+    public String gerarToken(Usuario usuario) {
         return Jwts.builder()
-                .setSubject(username)
+                .setSubject(usuario.getUsername())
+                .claim("role", usuario.getRole())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(key)
