@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.Usuario;
 import com.example.demo.security.JwtUtil;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,7 +36,8 @@ public class AuthController {
                     new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
             );
 
-            String token = jwtUtil.gerarToken(request.getUsername());
+            Usuario usuario = (Usuario) auth.getPrincipal();
+            String token = jwtUtil.gerarToken(usuario);
 
             return ResponseEntity.ok(Map.of("token", token));
 
