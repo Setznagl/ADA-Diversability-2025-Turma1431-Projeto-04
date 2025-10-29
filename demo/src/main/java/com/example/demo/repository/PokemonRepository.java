@@ -15,6 +15,7 @@ public interface PokemonRepository extends JpaRepository<Pokemon, Long> {
     Optional<Pokemon> findByName(String name);
 
     Optional<Pokemon> findByNameIgnoreCase(String name);
+    List<Pokemon> findByFavoriteTrue();
 
     List<Pokemon> findByWeightGreaterThan(int weight);
 
